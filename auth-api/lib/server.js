@@ -17,6 +17,7 @@ const authRoutes = require('./auth/routes/authRoutes.js');
 
 // API routes
 const v1Routes = require('./auth/routes/v1.js');
+const v2Routes = require('./auth/routes/v2.js');
 
 // Prepare the express app
 const app = express();
@@ -33,6 +34,8 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use(authRoutes);
 app.use('/api/v1', v1Routes);
+app.use('/api/v2', v2Routes);
+
 
 // Catchalls
 app.use('*', notFound);

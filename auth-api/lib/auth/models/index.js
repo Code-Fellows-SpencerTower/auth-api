@@ -18,3 +18,52 @@ module.exports = {
   food: new Collection(food),
   clothes: new Collection(clothes),
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// {
+//   "user": {
+//     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlJpY2sxIiwiaWF0IjoxNjQyNjU3MTY5fQ.Kc55tj3LHKm6b5FxXBh5nBQe0VVNaLKov2tbITMGXUA",
+//     "capabilities": [
+//       "read",
+//       "create",
+//       "update",
+//       "delete"
+//     ],
+//     "id": 5,
+//     "username": "Rick1",
+//     "password": "$2b$10$DZxe7dZyaOCUFSYPRRBBRuCWAI1zlgj7LA5QsJmdvqNYvQgmnqS2u",
+//     "role": "admin",
+//     "updatedAt": "2022-01-20T05:39:29.471Z",
+//     "createdAt": "2022-01-20T05:39:29.471Z"
+//   },
+//   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlJpY2sxIiwiaWF0IjoxNjQyNjU3MTY5fQ.Kc55tj3LHKm6b5FxXBh5nBQe0VVNaLKov2tbITMGXUA",
+//   "role": "admin"
+// }

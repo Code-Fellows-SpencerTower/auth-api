@@ -9,6 +9,8 @@ router.param('model', (req, res, next) => {
   const modelName = req.params.model;
   if (dataModules[modelName]) {
     req.model = dataModules[modelName];
+    console.log('req.model: ', req);
+    console.log('req.model: ', req.model);
     next();
   } else {
     next('Invalid Model');
@@ -33,6 +35,7 @@ async function handleGetOne(req, res) {
 }
 
 async function handleCreate(req, res) {
+  console.log(`Route Hit: ${req.model}`);
   let obj = req.body;
   let newRecord = await req.model.create(obj);
   res.status(201).json(newRecord);
