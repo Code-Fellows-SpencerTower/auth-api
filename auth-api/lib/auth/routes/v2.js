@@ -2,6 +2,9 @@
 
 const express = require('express');
 const dataModules = require('../models');
+const bearerAuth = require('../middleware/bearer.js');
+const acl = require('../middleware/acl.js');
+// const { users } = require('../models/index.js');
 
 const router = express.Router();
 
@@ -9,26 +12,30 @@ router.param('model', (req, res, next) => {
   const modelName = req.params.model;
   if (dataModules[modelName]) {
     req.model = dataModules[modelName];
+    console.log('req.model: ', req);
+    console.log('req.model: ', req.model);
     next();
   } else {
     next('Invalid Model');
   }
 });
 
-router.get('/:model', handleGetAll);
-router.get('/:model/:id', handleGetOne);
-router.post('/:model', handleCreate);
-router.put('/:model/:id', handleUpdate);
-router.delete('/:model/:id', handleDelete);
+router.get('/:model', bearerAuth, handleGetAll);
+router.get('/:model/:id', bearerAuth, handleGetOne);
+router.post('/:model', bearerAuth, acl('create'), handleCreate);
+router.put('/:model/:id', bearerAuth, acl('update'), handleUpdate);
+router.patch('/:model/:id', bearerAuth, acl('update'), handlePatch);
+router.delete('/:model/:id', bearerAuth, acl('delete'), handleDelete);
 
 async function handleGetAll(req, res) {
+  console.log('v2 GET hit');
   let allRecords = await req.model.get();
   res.status(200).json(allRecords);
 }
 
 async function handleGetOne(req, res) {
   const id = req.params.id;
-  let theRecord = await req.model.get(id)
+  let theRecord = await req.model.get(id);
   res.status(200).json(theRecord);
 }
 
@@ -41,8 +48,15 @@ async function handleCreate(req, res) {
 async function handleUpdate(req, res) {
   const id = req.params.id;
   const obj = req.body;
-  let updatedRecord = await req.model.update(id, obj)
+  let updatedRecord = await req.model.update(id, obj);
   res.status(200).json(updatedRecord);
+}
+
+async function handlePatch(req, res) {
+  const id = req.params.id;
+  const obj = req.body;
+  let patchedRecord = await req.model.update(id, obj);
+  res.status(200).json(patchedRecord);
 }
 
 async function handleDelete(req, res) {
@@ -52,4 +66,6 @@ async function handleDelete(req, res) {
 }
 
 
+
 module.exports = router;
+
