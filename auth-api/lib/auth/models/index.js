@@ -1,9 +1,9 @@
 'use strict';
 
-const userModel = require('./users.js');
+const userModel = require('./users.schema.js');
 const { Sequelize, DataTypes } = require('sequelize');
-const clothesModel = require('./clothes/model.js.js');
-const foodModel = require('./food/model.js.js');
+const clothesModel = require('./clothes.shema.js');
+const foodModel = require('./food.schema.js');
 const Collection = require('./data-collection.js');
 
 const DATABASE_URL = process.env.DATABASE_URL || 'sqlite:memory;';

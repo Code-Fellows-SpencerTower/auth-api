@@ -10,13 +10,13 @@ const morgan = require('morgan');
 // Esoteric Resources
 const errorHandler = require('./error-handlers/500.js');
 const notFound = require('./error-handlers/404.js');
-const logger = require('./middleware/logger.js.js');
+// const logger = require('./middleware/logger.js');
 
 // Auth routes
 const authRoutes = require('./auth/routes/authRoutes.js');
 
 // API routes
-const v1Routes = require('./routes/v1.js.js');
+const v1Routes = require('./auth/routes/v1.js');
 
 // Prepare the express app
 const app = express();
@@ -24,7 +24,7 @@ const app = express();
 // App Level MW
 app.use(cors());
 app.use(morgan('dev'));
-app.use(logger);
+// app.use(logger);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
