@@ -21,12 +21,11 @@ router.param('model', (req, res, next) => {
 });
 
 router.get('/:model', bearerAuth, handleGetAll);
-
-
-// router.get('/:model/:id', handleGetOne);
+router.get('/:model/:id', bearerAuth, handleGetOne);
 router.post('/:model', bearerAuth, acl('create'), handleCreate);
-router.put('/:model/:id', handleUpdate);
-// router.delete('/:model/:id', handleDelete);
+router.put('/:model/:id', bearerAuth, acl('update'), handleUpdate);
+router.patch('/:model/:id', bearerAuth, acl('update'), handlePatch);
+router.delete('/:model/:id', bearerAuth, acl('delete'), handleDelete);
 
 async function handleGetAll(req, res) {
   console.log('v2 GET hit');
@@ -34,11 +33,11 @@ async function handleGetAll(req, res) {
   res.status(200).json(allRecords);
 }
 
-// async function handleGetOne(req, res) {
-//   const id = req.params.id;
-//   let theRecord = await req.model.get(id);
-//   res.status(200).json(theRecord);
-// }
+async function handleGetOne(req, res) {
+  const id = req.params.id;
+  let theRecord = await req.model.get(id);
+  res.status(200).json(theRecord);
+}
 
 async function handleCreate(req, res) {
   let obj = req.body;
@@ -53,21 +52,19 @@ async function handleUpdate(req, res) {
   res.status(200).json(updatedRecord);
 }
 
-// async function handleDelete(req, res) {
-//   let id = req.params.id;
-//   let deletedRecord = await req.model.delete(id);
-//   res.status(200).json(deletedRecord);
-// }
+async function handlePatch(req, res) {
+  const id = req.params.id;
+  const obj = req.body;
+  let patchedRecord = await req.model.update(id, obj);
+  res.status(200).json(patchedRecord);
+}
 
-// app.get('/posts', bearerAuth(UserModel), acl('read'), (req, res) => {
-//   console.log('You made it!');
-//   res.status(200).send('Incoming Posts');
-// });
+async function handleDelete(req, res) {
+  let id = req.params.id;
+  let deletedRecord = await req.model.delete(id);
+  res.status(200).json(deletedRecord);
+}
 
-// app.post('/posts', bearerAuth(UserModel), acl('create'), (req, res) => {
-//   console.log('You made it!');
-//   res.status(200).send('Post Created');
-// });
 
 
 module.exports = router;
